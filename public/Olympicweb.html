@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>올림픽 공원 실시간 분석 사이트</title>
+</head>
+<body>
+	<div id="map" style="width:1880px;height:1020px;"></div>
+
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f14edae7f466c74716067cbccfbed710"></script>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        // center: new kakao.maps.LatLng(37.520090965318694, 127.12237312306695), // 지도의 중심좌표
+		        center: new kakao.maps.LatLng(37.52045297279662, 127.12081265253084), // 지도의 중심좌표
+                level: 4, // 지도의 확대 레벨
+		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
+
+		// 지도를 생성한다 
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	</script>
+</body>
+</html>

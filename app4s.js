@@ -73,7 +73,7 @@ var UserModel;
 function connectDB() {
 	// 데이터베이스 연결 정보
 	var databaseUrl = 'mongodb://localhost:27017/local';
-	 
+
 	// 데이터베이스 연결
     console.log('데이터베이스 연결을 시도합니다.');
     mongoose.Promise = global.Promise;  // mongoose의 Promise 객체는 global의 Promise 객체 사용하도록 함
@@ -127,6 +127,10 @@ function createUserSchema()
 
 // 라우터 객체 참조
 var router = express.Router();
+
+router.route('/process/web').post(function(req,res){
+	console.log('/process/web 호출됨.');
+});
 
 // 메모 정보 추가 라우팅 함수 - 클라이언트에서 보내오는 데이터를 이용해 데이터베이스에 추가
 router.route('/process/save').post(function(req, res) {
