@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<button _ngcontent-nbr-c43="" type="button" class="btn_refresh"> 새로고침 </button>
 	<meta charset="utf-8">
 	<title>올림픽 공원 실시간 분석 사이트</title>
 </head>
@@ -9,6 +10,58 @@
 
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f14edae7f466c74716067cbccfbed710"></script>
 	<script>
+		// 지도에 풀리곤으로 표시할 영역데이터 배열
+		// new kakao.maps.LatLng(,)
+		var areas = [{
+			name : '남2문영역',
+			path : [
+				new kakao.maps.LatLng(37.51406671162439, 127.12338128308731),
+				new kakao.maps.LatLng(37.51445395323652, 127.12356289875763),
+				new kakao.maps.LatLng(37.51491498156726, 127.12210451333387),
+				new kakao.maps.LatLng(37.5145998062038, 127.12193433246816)
+			]
+		},{
+			name : '남3문영역',
+			path : [
+				new kakao.maps.LatLng(37.51575868180089, 127.11865593133618),
+				new kakao.maps.LatLng(37.51586897494938, 127.11873528541167),
+				new kakao.maps.LatLng(37.516006766529195, 127.11834808927092),
+				new kakao.maps.LatLng(37.51588517095255, 127.1183083075157)
+			]
+		},{
+			name : '남4문영역',
+			path : [
+				new kakao.maps.LatLng(37.51658542181887, 127.11632142418888),
+				new kakao.maps.LatLng(37.516736242091824, 127.11642063374951),
+				new kakao.maps.LatLng(37.51686508826782, 127.11595989026306),
+				new kakao.maps.LatLng(37.51674125327031, 127.1159059691061)
+			]
+		},{
+			name : '동2문영역',
+			path : [
+				new kakao.maps.LatLng(37.51598041067405, 127.13053604473095),
+				new kakao.maps.LatLng(37.516052678171725, 127.1303664999615),
+				new kakao.maps.LatLng(37.515863623860874, 127.13022477924319),
+				new kakao.maps.LatLng(37.515768834652285, 127.13039145670322)
+			]
+		},{
+			name : '서2문영역',
+			path : [
+				new kakao.maps.LatLng(37.5198354980903, 127.11431294234357),
+				new kakao.maps.LatLng(37.51977223075712, 127.11451646073971),
+				new kakao.maps.LatLng(37.52010087664934, 127.1147432027874),
+				new kakao.maps.LatLng(37.52017091833386, 127.11452272604674)
+			]
+		},{
+			name : '북2문영역',
+			path : [
+				new kakao.maps.LatLng(37.523510741993874, 127.12829514752133),
+				new kakao.maps.LatLng(37.52328566998845, 127.12813073131971),
+				new kakao.maps.LatLng(37.52349831635856, 127.12728831367718),
+				new kakao.maps.LatLng(37.52387203015621, 127.12747560579551)
+			]
+		}
+	];
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
 		        // center: new kakao.maps.LatLng(37.520090965318694, 127.12237312306695), // 지도의 중심좌표
@@ -19,6 +72,78 @@
 
 		// 지도를 생성한다 
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+        // 실시간교통 타일 이미지 추가
+		map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC); 
+
+
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+    {
+        title: '남2문', 
+        latlng: new kakao.maps.LatLng(37.51434223590718, 127.12269175840116)
+    },
+    {
+        title: '남3문', 
+        latlng: new kakao.maps.LatLng(37.515826432931874, 127.11848071277946)
+    },
+    {
+        title: '남4문', 
+        latlng: new kakao.maps.LatLng(37.51667795259269, 127.11614058425518)
+    },
+    {
+        title: '동2문',
+        latlng: new kakao.maps.LatLng(37.51588148167364, 127.13037185783178)
+    },
+	{
+		title: '서2문',
+        latlng: new kakao.maps.LatLng(37.51998850944507, 127.11447719937004)
+	},
+	{
+		title: '북2문',
+        latlng: new kakao.maps.LatLng(37.52356986500902, 127.12778052948829)
+	}
+];
+
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+// 지도에 영역데이터를 폴리곤으로 표시합니다 
+for (var i = 0, len = areas.length; i < len; i++) {
+    displayArea(areas[i]);
+}
+
+// 다각형을 생상하고 이벤트를 등록하는 함수입니다
+function displayArea(area) {
+
+    // 다각형을 생성합니다 
+    var polygon = new kakao.maps.Polygon({
+        map: map, // 다각형을 표시할 지도 객체
+        path: area.path,
+        strokeWeight: 2,
+        strokeColor: '#004c80',
+        strokeOpacity: 0.8,
+        fillColor: '#f00',
+        fillOpacity: 0.7 
+    });
+}
 
 	</script>
 </body>

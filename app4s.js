@@ -10,21 +10,21 @@
 
 // Express 기본 모듈 불러오기
 var express = require('express')
-  , http = require('http')
-  , path = require('path');
+	, http = require('http')
+	, path = require('path');
 
 // Express의 미들웨어 불러오기
 var bodyParser = require('body-parser')
-  , cookieParser = require('cookie-parser')
-  , static = require('serve-static')
-  , errorHandler = require('errorhandler');
+	, cookieParser = require('cookie-parser')
+	, static = require('serve-static')
+	, errorHandler = require('errorhandler');
 
 // 에러 핸들러 모듈 사용
 var expressErrorHandler = require('express-error-handler');
 
 // Session 미들웨어 불러오기
 var expressSession = require('express-session');
- 
+
 // mongoose 모듈 사용
 var mongoose = require('mongoose');
 
@@ -45,7 +45,7 @@ app.use(bodyParser.json())
 
 // public 폴더를 static으로 오픈
 app.use('/public', static(path.join(__dirname, 'public')));
- 
+
 // cookie-parser 설정
 app.use(cookieParser());
 
@@ -199,9 +199,9 @@ var addMemoInfo = function(database, author , contents, createDate, callback) {
 
 // 404 에러 페이지 처리
 var errorHandler = expressErrorHandler({
- static: {
-   '404': './public/404.html'
- }
+	static: {
+	'404': './public/404.html'
+	}
 });
 
 app.use( expressErrorHandler.httpError(404) );
@@ -225,9 +225,9 @@ app.on('close', function () {
 
 // Express 서버 시작
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
+	console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 
   // 데이터베이스 연결을 위한 함수 호출
-  connectDB();
+	connectDB();
 
 });

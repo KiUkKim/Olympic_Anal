@@ -1,0 +1,10 @@
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+h4 {
+  font-family: "Nanum Pen Script", cursive;
+}
+
+#to_time {
+  font-family: "Jeju Gothic", sans-serif;
+}
